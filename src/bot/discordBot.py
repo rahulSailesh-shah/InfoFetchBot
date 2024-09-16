@@ -20,7 +20,7 @@ class DiscordBot:
 
     async def send_message(self, message: Message, user_message: str) -> None:
         if not user_message:
-            print('(Message was empty because intents were not enabled probably)')
+            print('Message was empty because intents were not enabled probably')
             return
 
         is_private = user_message[0] == '?'
