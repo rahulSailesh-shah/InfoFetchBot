@@ -1,0 +1,7 @@
+.env
+.venv/
+OAI_CONFIG_LIST
+.cache
+__pycache__
+web/
+webAgentCode/
