@@ -56,7 +56,15 @@ def scrape_page(url: Annotated[str, "The URL of the web page to scrape"], apify_
     return text_data
 
 class WebScraperAgent:
-    def __init__(self):
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(WebScraperAgent, cls).__new__(cls)
+            cls._instance._initialize()
+        return cls._instance
+
+    def _initialize(self):
         config_list = config_list_from_json(
             "OAI_CONFIG_LIST",
             filter_dict={
@@ -81,7 +89,6 @@ class WebScraperAgent:
             default_auto_reply="Please continue if not finished, otherwise return 'TERMINATE'.",
         )
 
-        # Define a properly annotated wrapper function
         def scrape_wrapper(url: Annotated[str, "The URL of the web page to scrape"]) -> Annotated[str, "Scraped content"]:
             return scrape_page(url, self.apify_api_key)
 
@@ -92,6 +99,12 @@ class WebScraperAgent:
             name="scrape_page",
             description="Scrape a web page and return the content.",
         )
+
+    @classmethod
+    def get_instance(cls):
+        if cls._instance is None:
+            cls._instance = cls()
+        return cls._instance
 
     def initiate_chat(self, url: str) -> dict:
         summary_prompt = """Summarize the scraped content and format summary EXACTLY as follows:
@@ -113,11 +126,11 @@ class WebScraperAgent:
         ---
         """
 
-        chat_result = self.user_proxy_agent.initiate_chat(
+        result = self.user_proxy_agent.initiate_chat(
             self.scraper_agent,
             message=f"Can you scrape: {url} for me?",
             summary_method="reflection_with_llm",
             summary_args={"summary_prompt": summary_prompt},
         )
 
-        return chat_result
+        return result

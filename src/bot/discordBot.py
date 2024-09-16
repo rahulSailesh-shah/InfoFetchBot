@@ -1,8 +1,12 @@
 from typing import Final
-import os
+import os, sys
 from discord import Intents, Client, Message
-from random import choice, randint
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
+from agents.webInfo import WebInfoAgent
+from agents.scraper import WebScraperAgent
 
+web_info_agent = WebInfoAgent.get_instance()
+web_scraper_agent = WebScraperAgent.get_instance()
 
 class DiscordBot:
     def __init__(self):

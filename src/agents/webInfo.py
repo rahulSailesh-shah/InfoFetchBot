@@ -1,8 +1,15 @@
-
 import autogen
 
 class WebInfoAgent:
-    def __init__(self):
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(WebInfoAgent, cls).__new__(cls)
+            cls._instance._initialize()
+        return cls._instance
+
+    def _initialize(self):
         config_list = autogen.config_list_from_json(
             "OAI_CONFIG_LIST",
             filter_dict={
@@ -42,6 +49,12 @@ class WebInfoAgent:
         )
 
         print("WebInfoAgent initialized.")
+
+    @classmethod
+    def get_instance(cls):
+        if cls._instance is None:
+            cls._instance = cls()
+        return cls._instance
 
     def initiate_chat(self, message):
         print("Initiating chat with WebInfoAgent. Message:", message)
