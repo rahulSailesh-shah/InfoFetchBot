@@ -110,19 +110,19 @@ class WebScraperAgent:
         summary_prompt = """Summarize the scraped content and format summary EXACTLY as follows:
         ---
         *Company name*:
-        `Acme Corp`
+        Acme Corp
         ---
         *Website*:
-        `acmecorp.com`
+        acmecorp.com
         ---
         *Description*:
-        `Company that does things.`
+        Company that does things.
         ---
         *Tags*:
-        `Manufacturing. Retail. E-commerce.`
+        Manufacturing. Retail. E-commerce.
         ---
         *Takeaways*:
-        `Provides shareholders with value by selling products.`
+        Provides shareholders with value by selling products.
         ---
         """
 

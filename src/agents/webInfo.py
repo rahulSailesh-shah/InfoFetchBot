@@ -57,12 +57,13 @@ class WebInfoAgent:
         return cls._instance
 
     def initiate_chat(self, message):
+        message = "Give me some information about: " +  message
         print("Initiating chat with WebInfoAgent. Message:", message)
         try:
             response = self.user_proxy.initiate_chat(
                 self.assistant,
                 message=message,
-                silent=True
+                silent=False
             )
             return response
         except Exception as e:

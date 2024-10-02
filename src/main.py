@@ -1,7 +1,7 @@
 from bot.discordBot import DiscordBot
-from agents.webInfo import WebInfoAgent
-from agents.scraper import WebScraperAgent
 from dotenv import load_dotenv
+from agents.webInfo import WebInfoAgent
+
 
 load_dotenv()
 
